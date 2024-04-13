@@ -6,6 +6,12 @@
     color: white;
     display: flex;
     flex-direction: column;
+    position: fixed; /* Keeps the sidebar in place */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    width: 250px; /* Set the width of the sidebar */
+    height: 100vh; /* Full height */
+    overflow-y: auto; /* Allows scrolling within the sidebar */
   }
   
   .sidebar-wrapper {

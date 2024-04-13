@@ -30,6 +30,10 @@ function Sidebar() {
   return (
     <div className="sidebar">
       <div className="sidebar-wrapper">
+        <div className="logo d-flex align-items-center justify-content-between">
+          <h5 className="brand-name">Kushal Ma</h5>
+        </div>
+        <hr />
         <div className="user-section d-flex align-items-center justify-content-start">
           <img src={user.profilePicture} alt={user.name} className="user-profile-picture" />
           <span className="user-name">{user.name}</span>

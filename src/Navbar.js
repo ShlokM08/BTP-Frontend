@@ -9,20 +9,10 @@ import './Navbar.css';
 const Navbar = () => {
   return (
     <nav className="navbar">
-      {/* Left-aligned items */}
-      <div className="navbar-brand">
-        {/* Logo or Brand Icon here */}
-        <img src="/Users/hardiparikh/kushal-ma-app/src/assets/logo.png" alt="Kushal Ma" className="navbar-logo" />
-      </div>
-
-      {/* Search bar */}
-      <div className="navbar-search">
-        <FontAwesomeIcon icon={faSearch} />
-        <input type="text" placeholder="Search..." />
-      </div>
-
       {/* Right-aligned items */}
-      <div className="navbar-right">
+      <div className="navbar-search">
+        <FontAwesomeIcon icon={faSearch} className="navbar-icon" />
+        <input type="text" placeholder="Search..." className="search-input" />
         <FontAwesomeIcon icon={faEnvelope} className="navbar-icon" />
         <FontAwesomeIcon icon={faBell} className="navbar-icon" />
         <FontAwesomeIcon icon={faCog} className="navbar-icon" />

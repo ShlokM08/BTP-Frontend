@@ -1,0 +1,22 @@
+const Dashboard = () => {
+    return (
+      <div className="dashboard-layout">
+        <Sidebar /> {/* Sidebar remains unchanged */}
+        <div className="main-content">
+          {/* Your content now has a margin-left */}
+          <div className="info-boxes-container">
+            {/* InfoBoxes in a row */}
+            <InfoBox icon={faServer} title="Number" subtitle="150GB" />
+            <InfoBox icon={faShoppingCart} title="Revenue" subtitle="$1,345" />
+            <InfoBox icon={faUser} title="Errors" subtitle="23" />
+            <InfoBox icon={faExclamationTriangle} title="Followers" subtitle="+45K" />
+          </div>
+          {/* Place your graphs below the info boxes */}
+          <LineChart />
+          <BarChart />
+          {/* Add other components like tasks list here */}
+        </div>
+      </div>
+    );
+  };
+  
