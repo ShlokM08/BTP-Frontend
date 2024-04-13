@@ -1,0 +1,48 @@
+/* Navbar.css */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 60px; /* Or your desired height */
+  }
+  
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    text-size-adjust: 30;
+  }
+  
+  .navbar-logo {
+    height: 40px; 
+    margin-right: 10px;
+  }
+  
+  .navbar-search {
+    display: flex;
+    align-items: center;
+    border: 0px solid #ddd;
+    padding: 1px 5px;
+    border-radius: 10px;
+  }
+  
+  .navbar-search input {
+    border: none;
+    outline: none;
+    margin-left: 5px;
+  }
+  
+  .navbar-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-icon {
+    margin: 0 15px;
+    cursor: pointer;
+  }
+  
+  /* Additional styling as needed */
+  

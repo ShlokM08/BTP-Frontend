@@ -1,0 +1,138 @@
+/* Sidebar.css */
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background-color: #262626;
+    color: white;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sidebar-wrapper {
+    padding-top: 10px;
+  }
+  
+  .app-logo {
+    width: 40px; /* Logo size */
+    margin-right: 10px;
+  }
+  
+  .brand-name {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    margin: 0;
+  }
+  
+  .user-section, .logo {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-profile-picture {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    margin-right: 15px;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+  }
+  
+  .user-name {
+    font-weight: bold;
+    display: inline-block;
+  }
+  
+  .nav {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 15px;
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 10px;
+  }
+  
+  .nav-link {
+    padding: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #FFFFFF;
+    justify-content: flex-start; /* Aligns the link contents to the left */
+    padding: 12px 15px;
+    transition: background-color 0.2s;
+  }
+  
+  .nav-icon {
+    margin-right: 10px;
+  }
+  
+  .link-text {
+    flex-grow: 1;
+  }
+  
+  .icon-small {
+    cursor: pointer;
+    margin-left: auto; /* Move icon to the end of the nav item */
+    position: absolute; /* Makes it absolute relative to its parent */
+    right: 15px; /* Adjust as needed for positioning the arrow icon inside */
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .dropdown-toggle {
+    transition: transform 0.3s;
+    position: absolute;
+    right: 15px;
+  }
+  
+  .dropdown-toggle.open {
+    transform: rotate(180deg); /* Flip arrow up when dropdown is open */
+  }
+  
+  .dropdown {
+    display: none;
+    flex-direction: column;
+    padding-left: 10px; /* Indent dropdown items */
+    display: none; /* Keeps the dropdown hidden initially */
+    flex-direction: column;
+    padding-left: 0; /* Aligns dropdown items below parent text */
+    position: absolute;
+    top: 100%; /* Positions the dropdown right below the parent item */
+    left: 0;
+    width: 100%; /* Full width of the parent item */
+    background: #2c2c2c; /* Matches the sidebar background */
+    border-top: 1px solid rgba(255, 255, 255, 0.1); 
+  }
+  
+  .dropdown-link {
+
+    padding-left: 30px;
+  }
+  
+  .nav-item:hover > .dropdown,
+  .nav-item:active > .dropdown {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .nav-link.active, 
+  .nav-link:hover {
+    background: #333333;
+  }
+  
+  .hr {
+    border-bottom: 1px solid #444;
+    margin: 0 15px;
+  }
+  
