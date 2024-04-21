@@ -15,12 +15,14 @@ const user = {
 const routes = [
   { path: "/", name: "Dashboard", icon: faTachometerAlt },
   { path: "/chats", name: "Chats", icon: faCube, dropdown: true, subRoutes: ['Zoom', 'WhatsApp'] },
+  { path: "/sites", name: "Sites", icon: faTable, dropdown: true, subRoutes: ['Site 1', 'Site 2'] },
+  { path: "/moderators", name: "Moderators", icon: faTable, dropdown: true, subRoutes: ['Mod 1', 'Mod 2'] },
   { path: "/groups", name: "Groups", icon: faTable, dropdown: true, subRoutes: ['Group 1', 'Group 2'] },
   { path: "/statistics", name: "Statistics", icon: faChartBar, dropdown: true, subRoutes: ['Stats 1', 'Stats 2'] },
   { path: "/calendar", name: "Calendar", icon: faCalendar },
 ];
 
-function Sidebar() {
+function CSidebar() {
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
 
   const handleDropdown = (index) => {
@@ -74,4 +76,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default CSidebar;

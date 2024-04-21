@@ -1,22 +1,30 @@
-const Dashboard = () => {
-    return (
-      <div className="dashboard-layout">
-        <Sidebar /> {/* Sidebar remains unchanged */}
-        <div className="main-content">
-          {/* Your content now has a margin-left */}
-          <div className="info-boxes-container">
-            {/* InfoBoxes in a row */}
-            <InfoBox icon={faServer} title="Number" subtitle="150GB" />
-            <InfoBox icon={faShoppingCart} title="Revenue" subtitle="$1,345" />
-            <InfoBox icon={faUser} title="Errors" subtitle="23" />
-            <InfoBox icon={faExclamationTriangle} title="Followers" subtitle="+45K" />
-          </div>
-          {/* Place your graphs below the info boxes */}
-          <LineChart />
-          <BarChart />
-          {/* Add other components like tasks list here */}
-        </div>
-      </div>
-    );
-  };
+.dashboard {
+    padding: 20px;
+  }
+  
+  .info-boxes .col-md-4 {
+    padding: 0 10px; /* Add horizontal padding to each column */
+  }
+  
+  .graphs .col-lg-6 {
+    padding: 0 10px; /* Add horizontal padding to each column */
+  }
+  
+  .card {
+    margin-bottom: 20px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .list-group-item-success {
+    /* style for completed tasks */
+    text-decoration: line-through;
+    color: grey;
+  }
+  
+  @media (min-width: 992px) {
+    .dashboard {
+      margin-left: 250px;
+      width: calc(100% - 250px);
+    }
+  }
   

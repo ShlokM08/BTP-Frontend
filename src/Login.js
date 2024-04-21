@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
-import appleIcon from './assets/apple.svg';
+import appleIcon from './assets/apple.svg'; 
 import googleIcon from './assets/google.svg';
 import facebookIcon from './assets/facebook.svg';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -17,7 +18,19 @@ const Login = () => {
     event.preventDefault();
     // Handle the login logic here
     console.log({ email, password, role });
-    navigate('/HomePage');
+    if (role === 'Moderator') {
+      navigate('/HomePage');
+    }
+    if(role == 'Controller'){
+      navigate('/ControllerHomePage');
+    } 
+    if(role == 'System Admin'){
+      navigate('/SAHomePage');
+    }
+    else {
+      // You can handle other roles here if needed
+      console.log('Not a Moderator');
+    }
   };
 
   return (
@@ -41,18 +54,21 @@ const Login = () => {
         <select value={role} onChange={(e) => setRole(e.target.value)}>
           <option value="Moderator">Moderator</option>
           <option value="Controller">Controller</option>
-          <option value="SystemAdmin">System Admin</option>
+          <option value="System Admin">System Admin</option>
         </select>
         <button type="submit" className="login-button">LOGIN</button>
         <div className="or">-OR-</div>
         <div className="social-logins">
-        <button type="button" className="social-button apple"> 
-        <img src={appleIcon} alt="Apple" className="logo" />Sign in with Apple</button>
-        <button type="button" className="social-button google">
-        <img src={googleIcon} alt="Google" className="logo" />Continue with Google</button>
-        <button type="button" className="social-button facebook">
-        <img src={facebookIcon} alt="Facebook" className="logo" />Sign in with Facebook</button>
-        </div>
+        <button type="button" className="social-button apple">
+            <img src={appleIcon} alt="Apple" className="logo" />Sign in with Apple
+          </button>
+          <button type="button" className="social-button google">
+            <img src={googleIcon} alt="Google" className="logo" />Continue with Google
+          </button>
+          <button type="button" className="social-button facebook">
+            <img src={facebookIcon} alt="Facebook" className="logo" />Sign in with Facebook
+          </button>
+          </div>
       </form>
     </div>
   );

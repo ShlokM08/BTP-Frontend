@@ -2,15 +2,15 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 
-const BarChart = () => {
+const TotalModerators = () => {
   const data = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     datasets: [
       {
-        label: 'Total Group Activity',
+        label: 'Total Moderators Activity',
         data: [90, 180, 130, 170, 140, 140, 130, 132, 113, 129, 122, 146], // Example data
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(255, 159, 64, 0.6)',
+        borderColor: 'rgba(255, 159, 64, 0.6)',
         borderWidth: 1
       }
     ],
@@ -20,10 +20,10 @@ const BarChart = () => {
     plugins: {
       title: {
         display: true,
-        text: 'Total Groups Activity'
+        text: 'Total Moderators Activity'
       },
       legend: {
-        display: false
+        display: false 
       }
     },
     scales: {
@@ -48,10 +48,10 @@ const BarChart = () => {
   };
 
   return (
-    <div style={{ width: '400px', height: '300px', margin: 'auto' }}>
+    <div style={{ width: '900px', height: '400px', margin: 'auto' }}>
       <Bar data={data} options={options} />
     </div>
   );
 };
 
-export default BarChart;
+export default TotalModerators;

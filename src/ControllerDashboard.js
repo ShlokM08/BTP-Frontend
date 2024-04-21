@@ -1,12 +1,12 @@
 import React from 'react';
-import LineChart from './LineChart';
-import BarChart from './BarChart';
+import TotalModerators from './TotalModerators';
+import ComparingModerators from './ComparingModerators';
 import InfoBox from './InfoBox';
 import TaskList from './TaskList';
 import { faServer, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
 import './Dashboard.css';
 
-const Dashboard = () => {
+const ControllerDashboard = () => {
   return (
     <div className="container-fluid dashboard">
       <div className="row info-boxes justify-content-center">
@@ -26,7 +26,7 @@ const Dashboard = () => {
           <div className="col-12"> {/* Use full width */}
             <div className="card">
               <div className="card-body">
-                <LineChart />
+                <TotalModerators />
               </div>
             </div>
           </div>
@@ -38,7 +38,7 @@ const Dashboard = () => {
         <div className="col-lg-8 col-md-12">
           <div className="card">
             <div className="card-body">
-              <BarChart />
+              <ComparingModerators />
             </div>
           </div>
         </div>
@@ -55,4 +55,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default ControllerDashboard;

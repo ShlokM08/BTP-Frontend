@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import './SignUp.css'; 
 
-import appleIcon from './assets/apple.svg';
+import appleIcon from './assets/apple.svg'; 
 import googleIcon from './assets/google.svg';
 import facebookIcon from './assets/facebook.svg';
-
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -44,13 +43,16 @@ const SignUp = () => {
         <button type="submit" className="signUp-button">SIGNUP</button>
         <div className="or">-OR-</div>
         <div className="social-logins">
-        <button type="button" className="social-button apple"> 
-        <img src={appleIcon} alt="Apple" className="logo" />Sign in with Apple</button>
-        <button type="button" className="social-button google">
-        <img src={googleIcon} alt="Google" className="logo" />Continue with Google</button>
-        <button type="button" className="social-button facebook">
-        <img src={facebookIcon} alt="Facebook" className="logo" />Sign in with Facebook</button>
-        </div>
+        <button type="button" className="social-button apple">
+            <img src={appleIcon} alt="Apple" className="logo" />Sign in with Apple
+          </button>
+          <button type="button" className="social-button google">
+            <img src={googleIcon} alt="Google" className="logo" />Continue with Google
+          </button>
+          <button type="button" className="social-button facebook">
+            <img src={facebookIcon} alt="Facebook" className="logo" />Sign in with Facebook
+          </button>
+          </div>
       </form>
     </div>
   );
