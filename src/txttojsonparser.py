@@ -4,36 +4,39 @@ import random, string, os
 
 def store_json(json_key, name="new_schema.json"):
     try:
+        # Create the "json output" directory if it does not exist
+        if not os.path.exists("json output"):
+            os.makedirs("json output")
+        
         # "w" file mode will create a new file if it does not exist
-        file = open("json output/" + name, "w", encoding='utf-8')
-        file.write(json.dumps(json_key, ensure_ascii=False, indent=4))
-        file.close()
-    except:
-        print(f"Error in storing {name} JSON file.")
-        exit(1)
+        with open("json output/" + name, "w", encoding='utf-8') as file:
+            file.write(json.dumps(json_key, ensure_ascii=False, indent=4))
+    except Exception as e:
+        print(f"Error in storing {name} JSON file: {e}")
 
 
-def push_to_mongo(json_key):
-    try:
-        myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-        mydb = myclient["Test"]
-        mycol = mydb["data"]
 
-        # Searching for document with group name 'grp'
-        myquery = {"group_name": json_key["group_name"]}
-        mydoc = mycol.find(myquery)
-        # If document with group name 'grp' exists, then update it
-        if mydoc.count() > 0: # type: ignore
-            mycol.update_one(myquery, {"$set": json_key})
-            print("Successfully updated MongoDB.")
-            return
-        # Else insert a new document
-        mycol.insert_one(json_key)
+# def push_to_mongo(json_key):
+#     try:
+#         myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+#         mydb = myclient["Test"]
+#         mycol = mydb["data"]
 
-        print("Successfully pushed to MongoDB.")
-    except:
-        print("Error in pushing to MongoDB. (Make sure MongoDB is running)")
-        exit(1)
+#         # Searching for document with group name 'grp'
+#         myquery = {"group_name": json_key["group_name"]}
+#         mydoc = mycol.find(myquery)
+#         # If document with group name 'grp' exists, then update it
+#         if mydoc.count() > 0: # type: ignore
+#             mycol.update_one(myquery, {"$set": json_key})
+#             print("Successfully updated MongoDB.")
+#             return
+#         # Else insert a new document
+#         mycol.insert_one(json_key)
+
+#         print("Successfully pushed to MongoDB.")
+#     except:
+#         print("Error in pushing to MongoDB. (Make sure MongoDB is running)")
+#         exit(1)
 
 
 class User:
@@ -102,15 +105,27 @@ class Group:
 
 
     def get_group_name(self, file_name):
+        
         try:
-            # Case 1: You created group "Test"
-            # Case 2: You changed the group name from "Test" to "Test Group"
-            # To get the updated path we can directly access it from the file name derived from path
-            name = file_name.split('WhatsApp Chat with ')[1].split('.txt')[0]
-            return name
-        except:
-            print("Error in getting group name (get_group_name() function).")
-            exit(1)
+            # Print the filename received to check its format
+            print("Received filename:", file_name)
+
+            # Assuming the file name starts after the last backslash and ends before ".txt"
+            base_name = file_name.rsplit('\\', 1)[-1]  # Extract filename from path
+            print("Base name extracted:", base_name)
+
+            # Adjust regex pattern to include optional numeric suffixes
+            pattern = r'WhatsApp_Chat_with_(.+?)(?:_\d+)*\.txt'
+            match = re.search(pattern, base_name)
+            if match:
+                return match.group(1)
+            else:
+                raise ValueError("File name does not match expected pattern")
+        except Exception as e:
+            print(f"Error in getting group name (get_group_name() function): {e}")
+            raise  # Reraise the exception to provide feedback in the calling function
+
+
 
 
     def get_group_admins(self, lines):
@@ -280,122 +295,84 @@ class Group:
             exit(1)
 
 
+import re
+
 class Message:
     def get_timestamp(self, line):
         try:
-            # Sample: '11/7/23, 9:07 AM - Sufyan: ismei saare settings change krke like admins add/remove/change etc dekhengey'
-            # change the space between time and AM to a space
-            timestamp = line[:line.index('-')-1].replace(' ', ' ')
+            # Extract the timestamp ensuring spaces within timestamps are handled
+            timestamp = re.search(r"\d{2}/\d{2}/\d{4}, \d{2}:\d{2}", line).group()
             return timestamp
         except:
             print("Error in getting date and time (get_timestamp() function).")
-            exit(1)
-
+            raise
 
     def get_user(self, line):
         try:
-            # Sample: '11/7/23, 9:07 AM - Sufyan: ismei saare settings change krke like admins add/remove/change etc dekhengey'
-            # Sample2: '11/7/23, 9:05 AM - You created group "Test"'
-            # Observation: no system generated message will have a ':' in it. Thus no user will be present in it to check for which is good.
-            temp = line[line.index('-')+2 :]
-            if ':' not in temp:
-                user = 'System'
-            else:
-                user = temp[:temp.index(':')]
-            return user
+            # System messages won't have a user after '-' or might start with "System"
+            if '-' in line:
+                user_info = line.split('-', 1)[1].strip()
+                if ':' in user_info:
+                    return user_info.split(':', 1)[0].strip()
+                return "System"
+            return "System"
         except:
             print("Error in getting user.")
-            exit(1)
-
+            raise
 
     def get_message(self, line, user):
         try:
-            # Sample: '11/7/23, 9:07 AM - Sufyan: ismei saare settings change krke like admins add/remove/change etc dekhengey'
-            # Sample2: '11/7/23, 9:05 AM - You created group "Test"'
-            if user == 'System':
-                message = line[line.index('-')+2 :]
-            else:
-                message = line[line.index(user)+len(user)+2 :]
-            return message
+            # Message content starts after user and ':'
+            if user != "System":
+                return line.split(':', 2)[-1].strip()
+            return line.split('-', 1)[1].strip()
         except:
             print("Error in getting message.")
-            exit(1)
-
-
-    def get_tag(self, message, user):
-        try:
-            tag = []
-            if user == 'System':
-                tag.append(user)
-            else:
-                tag.append('User')
-                # TODO: Add more tags by performing NLP on messages
-            return tag
-        except:
-            print("Error in getting tag.")
-            exit(1)
-
+            raise
 
     def get_message_id(self, file_name, timestamp, grp, prev_id=''):
         try:
-            # mesage_id will be group name_timestamp_counter. Counter will be incremented for every message that has the same timestamp.
-            message_id = grp.get_group_name(file_name) + '_' + timestamp + '_'
-            if prev_id == '':
-                message_id += '0'
+            # Ensure group name extraction is correct
+            group_name = grp.get_group_name(file_name)
+            # Increment the counter based on the previous ID
+            if prev_id and timestamp in prev_id:
+                count = int(prev_id.rsplit('_', 1)[-1]) + 1
             else:
-                # compare if the current message has the same timestamp as the previous message
-                if prev_id.split('_')[1] == timestamp:
-                    message_id += str(int(prev_id.split('_')[2]) + 1)
-                else:
-                    message_id += '0'
-            return message_id
-        except:
-            print("Error in getting message id.")
-            exit(1)
-
-
-    def get_user_and_system_messages(self, dic): # dic is a list of dictionaries
-        try:
-            system_messages = []
-            user_messages = []
-            for i in range(len(dic)):
-                if dic[i]["sender"] == "System":
-                    system_messages.append(dic[i])
-                else:
-                    user_messages.append(dic[i])
-            return system_messages, user_messages
-        except:
-            print("Error in bifurcating user and system messages.")
-            exit(1)
-
+                count = 0
+            return f"{group_name}_{timestamp}_{count}"
+        except Exception as e:
+            print(f"Error in getting message id (get_message_id function): {e}")
+            raise
 
 def update_message_structure(lines, file_name, msg, grp):
-    try:
-        updated_lines = []
+    updated_lines = []
+    previous_message_id = None
 
-        for i in range(len(lines)):
-            temp = lines[i].strip()
-            if temp == '':
-                continue
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
 
-            # check if it contains a timestamp, if not then it is a continuation of the previous message
-            check = temp.split('/')[0]
-            if not check.isdigit():
-                updated_lines[-1]["message"] += ' ' + temp
-                continue
+        if re.match(r"\d{2}/\d{2}/\d{4}, \d{2}:\d{2}", line):  # Check if line starts with a timestamp
+            timestamp = msg.get_timestamp(line)
+            user = msg.get_user(line)
+            message = msg.get_message(line, user)
+            message_id = msg.get_message_id(file_name, timestamp, grp, previous_message_id)
+            updated_lines.append({
+                "message_id": message_id,
+                "timestamp": timestamp,
+                "sender": user,
+                "message": message,
+            })
+            previous_message_id = message_id
+        else:
+            # Continuation of the previous message
+            if updated_lines:
+                updated_lines[-1]["message"] += ' ' + line
 
-            timestamp = msg.get_timestamp(temp)
-            user = msg.get_user(temp)
-            message = msg.get_message(temp, user)
-            tag = msg.get_tag(message, user)
-            id = msg.get_message_id(file_name, timestamp, grp, updated_lines[-1]["message_id"] if len(updated_lines) > 0 else '')
+    return updated_lines
 
-            updated_lines.append({"message_id": id, "timestamp": timestamp, "sender": user, "message": message, "tag": tag})
-            # print(updated_lines[-1])
-        return updated_lines
-    except:
-        print("Error in updating message structure.")
-        exit(1)
+
 
 
 def mainJSONParser(content, file_name, user_info, store=True):
@@ -451,16 +428,16 @@ def mainJSON(path, store=True):
         #     store_json(user_json, "user wise schema.json")
         
         # push_to_mongo(group_json)
-    except:
-        print("Error in converting the data to json (main() function).")
-        exit(1)
+    
+    except Exception as e:  # Catch any exception and print it out
+        print(f"Error in converting the data to json (main() function): {e}")
 
 
 def check_all_files():
-    dir = "Whatsapp Chats"
+    dir = "uploads"
     files = os.listdir(dir)
     for file in files:
-        path = "Whatsapp Chats/" + file
+        path = "uploads/" + file
         mainJSON(path)
     
     return True
@@ -468,13 +445,10 @@ def check_all_files():
 
 if __name__ == "__main__":
     try:
-        path = "Whatsapp Chats\WhatsApp Chat with (SUPPORT PREGNANACY) 4.txt"
-        # path = "Whatsapp Chats\WhatsApp Chat with Test Group.txt"
+        path = "src\\uploads\\WhatsApp_Chat_with_SUPPORT_PREGNANACY_4_1.txt"
         mainJSON(path, store=True)
-        # check_all_files()
-    except:
-        print("Error in calling main() function.")
-        exit(1)
+    except Exception as e:
+        print(f"Error in calling main() function: {e}")
 
 
 
