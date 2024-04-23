@@ -12,37 +12,54 @@ const WhatsApp = () => {
     altMobileNumber: ''
   });
 
-  // Handles file selection and immediately submits to the server
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setSelectedFile(file);
-      // Prepare the form data
-      const formData = new FormData();
-      formData.append('file', file);
-
-      // Post the form data to the server
-      fetch('http://localhost:5000/upload', {
-        method: 'POST',
-        body: formData,
-      })
-      .then(response => response.json())
-      .then(data => {
-        alert('File processed successfully!');
-        console.log(data);
-        setSelectedFile(null); // Clear the selected file after submission
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-    }
-  };
-
-  // Opens file input dialog
+  // Opens file input dialog to choose a file
   const handleUploadClick = () => {
     document.getElementById('fileInput').click();
   };
 
+  // Sets the chosen file to state
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      alert(`File ${file.name} is ready to submit.`);
+    }
+  };
+
+  // Submits the file to the server
+  const handleSubmitFile = () => {
+    if (!selectedFile) {
+      alert('No file selected. Please upload a file first!');
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+  
+    fetch('http://localhost:5000/upload', {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json(); // If you are sure the server always sends JSON
+      } else {
+        // If the server might send a non-JSON response:
+        return response.text().then(text => {
+          throw new Error(text || 'Server responded with a non-200 status code');
+        });
+      }
+    })
+    .then(data => {
+      alert('File processed successfully!');
+      console.log(data);
+      setSelectedFile(null); // Clear the selected file after submission
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Failed to upload the file: ' + error.message);
+    });
+  };
   // Handles changes in option radio buttons
   const handleOptionChange = (event) => {
     setOptionSelected(event.target.value);
@@ -81,7 +98,7 @@ const WhatsApp = () => {
       <Sidebar />
       <div style={{ margin: '20px' }}>
         <h1>WhatsApp Messages</h1>
-        <p>Click 'Upload' to select and submit files for processing.</p>
+        <p>Select a file to upload and then submit it for processing.</p>
         <input
           type="file"
           id="fileInput"
@@ -89,6 +106,7 @@ const WhatsApp = () => {
           onChange={handleFileChange}
         />
         <button onClick={handleUploadClick}>Upload</button>
+        <button onClick={handleSubmitFile} disabled={!selectedFile}>Submit File</button>
         {selectedFile && <p>File ready to submit: {selectedFile.name}</p>}
 
         <div style={{ marginTop: '20px' }}> 
