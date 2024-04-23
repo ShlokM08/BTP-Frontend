@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './Infobox.css'; 
+import './InfoBox.css';
 
 const InfoBox = ({ icon, title, value, footer }) => {
   return (
