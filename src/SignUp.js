@@ -12,7 +12,6 @@ const SignUp = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle the login logic here
     console.log({ email, password, role });
   };
 
@@ -34,7 +33,7 @@ const SignUp = () => {
           placeholder="Password"
           required
         />
-        <div className="forgot-password">Forgot Password?</div>
+       
         <select value={role} onChange={(e) => setRole(e.target.value)}>
           <option value="Moderator">Moderator</option>
           <option value="Controller">Controller</option>
@@ -43,9 +42,6 @@ const SignUp = () => {
         <button type="submit" className="signUp-button">SIGNUP</button>
         <div className="or">-OR-</div>
         <div className="social-logins">
-        <button type="button" className="social-button apple">
-            <img src={appleIcon} alt="Apple" className="logo" />Sign in with Apple
-          </button>
           <button type="button" className="social-button google">
             <img src={googleIcon} alt="Google" className="logo" />Continue with Google
           </button>

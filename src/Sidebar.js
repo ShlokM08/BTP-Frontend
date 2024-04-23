@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import WhatsApp from './Whatsapp';
+import GRP from './GRP';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faTachometerAlt, faCube, faTable, faMapMarkerAlt, faChartBar, faCalendar, 
+import {
+  faTachometerAlt, faCube, faTable, faMapMarkerAlt, faChartBar, faCalendar,
   faFile, faChevronDown, faChevronUp
 } from '@fortawesome/free-solid-svg-icons';
 import './Sidebar.css';
@@ -14,9 +16,18 @@ const user = {
 
 const routes = [
   { path: "/", name: "Dashboard", icon: faTachometerAlt },
-  { path: "/chats", name: "Chats", icon: faCube, dropdown: true, subRoutes: ['Zoom', 'WhatsApp'] },
-  { path: "/groups", name: "Groups", icon: faTable, dropdown: true, subRoutes: ['Group 1', 'Group 2'] },
-  { path: "/statistics", name: "Statistics", icon: faChartBar, dropdown: true, subRoutes: ['Stats 1', 'Stats 2'] },
+  { path: "/chats", name: "Chats", icon: faCube, dropdown: true, subRoutes: [
+    { name: 'Zoom', path: '/chats/zoom' },
+    { name: 'WhatsApp', path: '/chats/whatsapp' }  
+  ] },
+  { path: "/groups", name: "Groups", icon: faTable, dropdown: true, subRoutes: [
+    { name: 'Group 1', path: '/groups/group-1' },
+    { name: 'Group 2', path: '/groups/group-2' }
+  ] },
+  { path: "/statistics", name: "Statistics", icon: faChartBar, dropdown: true, subRoutes: [
+    { name: 'Stats 1', path: '/statistics/stats-1' },
+    { name: 'Stats 2', path: '/statistics/stats-2' }
+  ] },
   { path: "/calendar", name: "Calendar", icon: faCalendar },
 ];
 
@@ -30,7 +41,7 @@ function Sidebar() {
   return (
     <div className="sidebar">
       <div className="sidebar-wrapper">
-      <div className="logo d-flex align-items-center justify-content-between">
+        <div className="logo d-flex align-items-center justify-content-between">
           <h5 className="brand-name">Kushal Ma</h5>
         </div>
         <hr/>
@@ -58,8 +69,8 @@ function Sidebar() {
                   <ul className="dropdown">
                     {route.subRoutes.map((subRoute, subIndex) => (
                       <li key={subIndex}>
-                        <NavLink to={`${route.path}/${subRoute.toLowerCase()}`} className="nav-link dropdown-link">
-                          {subRoute}
+                        <NavLink to={subRoute.path} className="nav-link dropdown-link">
+                          {subRoute.name}
                         </NavLink>
                       </li>
                     ))}

@@ -1,4 +1,3 @@
-// Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
@@ -16,7 +15,7 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle the login logic here
+   
     console.log({ email, password, role });
     if (role === 'Moderator') {
       navigate('/HomePage');
@@ -28,7 +27,7 @@ const Login = () => {
       navigate('/SAHomePage');
     }
     else {
-      // You can handle other roles here if needed
+    
       console.log('Not a Moderator');
     }
   };
@@ -50,7 +49,6 @@ const Login = () => {
           placeholder="Password"
           required
         />
-        <div className="forgot-password">Forgot Password?</div>
         <select value={role} onChange={(e) => setRole(e.target.value)}>
           <option value="Moderator">Moderator</option>
           <option value="Controller">Controller</option>
@@ -59,9 +57,6 @@ const Login = () => {
         <button type="submit" className="login-button">LOGIN</button>
         <div className="or">-OR-</div>
         <div className="social-logins">
-        <button type="button" className="social-button apple">
-            <img src={appleIcon} alt="Apple" className="logo" />Sign in with Apple
-          </button>
           <button type="button" className="social-button google">
             <img src={googleIcon} alt="Google" className="logo" />Continue with Google
           </button>

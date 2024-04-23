@@ -9,7 +9,7 @@ import './Sidebar.css';
 
 const user = {
   name: "Tania Andrew",
-  profilePicture: "/Users/hardiparikh/kushal-ma-app/src/assets/pp.png",
+  profilePicture: "./src/assets/pp.png",
 };
 
 const routes = [
