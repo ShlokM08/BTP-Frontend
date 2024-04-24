@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 import os
 
 
-from txttojsonparser import *  # Replace 'your_processing_script' with the actual name of your script file
+from txttojsonparser import *  
 
 app = Flask(__name__)
 CORS(app)  # This allows CORS for all domains
@@ -25,7 +25,7 @@ def handle_upload():
         # Here, you call the function to process the file after saving it
         try:
             user_info = (0, [], [])  # Replace with actual user info if available
-            processed_data = mainJSON(filepath, store=True, user_info=user_info)
+            processed_data = store_json(filepath, store=True, user_info=user_info)
             store_json(processed_data, name=f"processed_{filename}.json")  # This assumes the store_json function from your script
 
             # If you want to push the data to MongoDB, call the push_to_mongo function here
