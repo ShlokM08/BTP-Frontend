@@ -120,41 +120,68 @@ const WhatsApp = () => {
         </div>
 
         {optionSelected && (
-          <div style={{ textAlign: 'center' }}>
-            <input 
-              type="text"
-              name="userId"
-              placeholder="User ID"
-              value={userData.userId}
-              onChange={handleInputChange}
-            />
-            <input 
-              type="text"
-              name="userName"
-              placeholder="User's Name"
-              value={userData.userName}
-              onChange={handleInputChange}
-            />
-            {optionSelected !== 'AddAltMobileNumber' && (
-              <input 
-                type="tel"
-                name="mobileNumber"
-                placeholder="Mobile Number"
-                value={userData.mobileNumber}
-                onChange={handleInputChange}
-              />
+          <>
+            <div onChange={handleOptionChange} style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <label style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', whiteSpace: 'nowrap' }}>
+                <input type="radio" id="ChangeMobileNumber" value="ChangeMobileNumber" name="option" />
+                <span style={{ marginLeft: '10px' }}>Change Mobile Number</span>
+            </label>
+            <label style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', whiteSpace: 'nowrap' }}>
+                <input type="radio" id="AddAltMobileNumber" value="AddAltMobileNumber" name="option" />
+                <span style={{ marginLeft: '10px' }}>Add Alternative Mobile Number</span>
+            </label>
+            <label style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', whiteSpace: 'nowrap' }}>
+                <input type="radio" id="AddMember" value="AddMember" name="option" />
+                <span style={{ marginLeft: '10px' }}>Add Member to Group</span>
+            </label>
+            <label style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', whiteSpace: 'nowrap' }}>
+                <input type="radio" id="RemoveMember" value="RemoveMember" name="option" />
+                <span style={{ marginLeft: '10px' }}>Remove Member from a Group</span>
+            </label>
+            </div>
+
+            {optionSelected && (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginTop: '20px' }}>
+                <input 
+                  type="text"
+                  name="userId"
+                  placeholder="User id"
+                  value={userData.userId}
+                  onChange={handleInputChange}
+                  style={{ width: '200px' }} // Adjusted width
+                />
+                <input 
+                  type="text"
+                  name="userName"
+                  placeholder="User's name"
+                  value={userData.userName}
+                  onChange={handleInputChange}
+                  style={{ width: '200px' }} // Adjusted width
+                />
+                {optionSelected !== 'AddAltMobileNumber' && (
+                  <input 
+                    type="tel"
+                    name="mobileNumber"
+                    placeholder="User's Mobile Number"
+                    value={userData.mobileNumber}
+                    onChange={handleInputChange}
+                    style={{ width: '200px' }} // Adjusted width
+                  />
+                )}
+                {optionSelected === 'AddAltMobileNumber' && (
+                  <input 
+                    type="tel"
+                    name="altMobileNumber"
+                    placeholder="User's Alternative Mobile Number"
+                    value={userData.altMobileNumber}
+                    onChange={handleInputChange}
+                    style={{ width: '200px' }} // Adjusted width
+                  />
+                )}
+                <button onClick={handleSubmitChanges}>Make Changes</button>
+              </div>
             )}
-            {optionSelected === 'AddAltMobileNumber' && (
-              <input 
-                type="tel"
-                name="altMobileNumber"
-                placeholder="Alternative Mobile Number"
-                value={userData.altMobileNumber}
-                onChange={handleInputChange}
-              />
-            )}
-            <button onClick={handleSubmitChanges}>Make Changes</button>
-          </div>
+          </>
         )}
       </div>
     </div>
