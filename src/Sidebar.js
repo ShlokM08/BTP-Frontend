@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import WhatsApp from './Whatsapp';
 import GRP from './GRP';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import profilePicture from './assets/pp.jpg';
 import {
   faTachometerAlt, faCube, faTable, faMapMarkerAlt, faChartBar, faCalendar,
   faFile, faChevronDown, faChevronUp
@@ -11,7 +12,7 @@ import './Sidebar.css';
 
 const user = {
   name: "Tania Andrew",
-  profilePicture: "/Users/hardiparikh/kushal-ma-app/src/assets/pp.png",
+  profilePicture: profilePicture,
 };
 
 const routes = [
