@@ -14,7 +14,6 @@ const user = {
   profilePicture: profilePicture,
 };
 
-
 const routes = [
   { path: "/", name: "Dashboard", icon: faTachometerAlt },
   { path: "/chats", name: "Chats", icon: faCube, dropdown: true, subRoutes: ['Zoom', 'WhatsApp'] },

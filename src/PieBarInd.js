@@ -26,13 +26,13 @@ const PieBarInd = () => {
   };
 
   const data = {
-    labels: ['Rachel', 'Jeff', 'Mike', 'Zane', 'Harvey', 'Donna', 'Litt', 'Pearson', 'Margot', 'Jay', 'Gloria','Sanju','Hardu','Aksu','Yaksu'],
+    labels: ['Rachel', 'Jeff', 'Mike', 'Zane', 'Harvey', 'Donna', 'Litt', 'Pearson', 'Margot', 'Jay', 'Gloria','ALex','Hailey','Luke','Manny'],
     datasets: [
       {
         label: 'No. of Active Group Members',
         data: monthlyData[selectedMonth],
-        backgroundColor: 'rgb(153, 102, 255)',
-        borderColor: 'rgba(153, 102, 255, 0.2)',
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+        borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
       }
     ],
@@ -49,7 +49,7 @@ const PieBarInd = () => {
       x: {
         title: {
           display: true,
-          text: 'Groups'
+          text: 'Group Members'
         }
       },
       y: {
@@ -60,7 +60,7 @@ const PieBarInd = () => {
         beginAtZero: true
       }
     },
-    maintainAspectRatio: false // This ensures we can set our own height
+    maintainAspectRatio: false 
   };
 
   const handleMonthChange = (event) => {
@@ -68,7 +68,7 @@ const PieBarInd = () => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}> {/* Center chart vertically and horizontally */}
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}> 
       <div style={{ width: '900px', margin: '20px' }}>
         <div style={{ textAlign: 'center', margin: '20px' }}>
           <label htmlFor="month-selector">Select Month: </label>
@@ -78,7 +78,7 @@ const PieBarInd = () => {
             ))}
           </select>
         </div>
-        <div style={{ height: '500px' }}> {/* Explicitly setting height here */}
+        <div style={{ height: '500px' }}> 
             <Bar data={data} options={options} />
         </div>
       </div>

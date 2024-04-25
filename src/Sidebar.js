@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import WhatsApp from './Whatsapp';
-import GRP from './GRP';
+import { NavLink, useRouteMatch, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import profilePicture from './assets/pp.jpg';
 import {
-  faTachometerAlt, faCube, faTable, faMapMarkerAlt, faChartBar, faCalendar,
-  faFile, faChevronDown, faChevronUp
+  faTachometerAlt, faCube, faTable, faChartBar, faCalendar,
+  faChevronDown, faChevronUp
 } from '@fortawesome/free-solid-svg-icons';
 import './Sidebar.css';
+
+
+import WhatsApp from './Whatsapp';
+import GRP from './GRP';
+import Dashboard from './Dashboard';
+import profilePicture from './assets/pp.jpg'; // Adjust the path as necessary
 
 const user = {
   name: "Tania Andrew",
@@ -16,27 +19,32 @@ const user = {
 };
 
 const routes = [
-  { path: "/", name: "Dashboard", icon: faTachometerAlt },
-  { path: "/chats", name: "Chats", icon: faCube, dropdown: true, subRoutes: [
-    { name: 'Zoom', path: '/chats/zoom' },
-    { name: 'WhatsApp', path: '/chats/whatsapp' }  
+  { path: "/homepage", name: "Dashboard", icon: faTachometerAlt, component: Dashboard },
+  { name: "Chats", icon: faCube, dropdown: true, subRoutes: [
+    { name: 'Zoom'}, 
+    { name: 'WhatsApp', path: '/chats/whatsapp', component: WhatsApp }  
   ] },
-  { path: "/groups", name: "Groups", icon: faTable, dropdown: true, subRoutes: [
-    { name: 'Group 1', path: '/groups/group-1' },
-    { name: 'Group 2', path: '/groups/group-2' }
+  { name: "Groups", icon: faTable, dropdown: true, subRoutes: [
+    { name: 'Group 1', path: '/groups/group-1', component: GRP },
+    { name: 'Group 2' } 
   ] },
-  { path: "/statistics", name: "Statistics", icon: faChartBar, dropdown: true, subRoutes: [
-    { name: 'Stats 1', path: '/statistics/stats-1' },
-    { name: 'Stats 2', path: '/statistics/stats-2' }
+  { name: "Statistics", icon: faChartBar, dropdown: true, subRoutes: [
+    { name: 'Stats 1' }, 
+    { name: 'Stats 2' } 
   ] },
   { path: "/calendar", name: "Calendar", icon: faCalendar },
 ];
 
 function Sidebar() {
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
+  const location = useLocation();
 
   const handleDropdown = (index) => {
     setOpenDropdownIndex(openDropdownIndex === index ? null : index);
+  };
+ // Function to determine if the route is active
+  const isActiveRoute = (routePath) => {
+    return location.pathname === routePath;
   };
 
   return (
@@ -55,22 +63,26 @@ function Sidebar() {
           {routes.map((route, index) => (
             <React.Fragment key={index}>
               <li className={`nav-item ${openDropdownIndex === index ? 'open' : ''}`}>
-                <NavLink to={route.path} className="nav-link" activeClassName="active">
-                  <FontAwesomeIcon icon={route.icon} className="nav-icon" />
-                  <span className="link-text">{route.name}</span>
-                </NavLink>
-                {route.dropdown && (
-                  <FontAwesomeIcon 
-                    icon={openDropdownIndex === index ? faChevronUp : faChevronDown} 
-                    onClick={() => handleDropdown(index)} 
-                    className="icon-small dropdown-toggle" 
-                  />
+                {route.dropdown ? (
+                  <div className={`nav-link ${isActiveRoute(route.path) ? 'active' : ''}`} onClick={() => handleDropdown(index)}>
+                    <FontAwesomeIcon icon={route.icon} className="nav-icon" />
+                    <span className="link-text">{route.name}</span>
+                    <FontAwesomeIcon 
+                      icon={openDropdownIndex === index ? faChevronUp : faChevronDown} 
+                      className="icon-small dropdown-toggle" 
+                    />
+                  </div>
+                ) : (
+                  <NavLink to={route.path} className="nav-link" activeClassName="active">
+                    <FontAwesomeIcon icon={route.icon} className="nav-icon" />
+                    <span className="link-text">{route.name}</span>
+                  </NavLink>
                 )}
                 {route.dropdown && openDropdownIndex === index && (
                   <ul className="dropdown">
                     {route.subRoutes.map((subRoute, subIndex) => (
                       <li key={subIndex}>
-                        <NavLink to={subRoute.path} className="nav-link dropdown-link">
+                        <NavLink to={subRoute.path} className="nav-link dropdown-link" activeClassName="active">
                           {subRoute.name}
                         </NavLink>
                       </li>
