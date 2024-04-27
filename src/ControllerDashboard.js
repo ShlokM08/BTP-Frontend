@@ -23,7 +23,7 @@ const ControllerDashboard = () => {
       {/* Graphs */}
       <div className="graphs mt-4">
         <div className="row">
-          <div className="col-12"> {/* Use full width */}
+          <div className="col-12"> 
             <div className="card">
               <div className="card-body">
                 <TotalModerators />
@@ -33,7 +33,7 @@ const ControllerDashboard = () => {
         </div>
       </div>
 
-            {/* New Row for BarChart and TaskList */}
+            
             <div className="row mt-4">
         <div className="col-lg-8 col-md-12">
           <div className="card">

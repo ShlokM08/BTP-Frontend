@@ -1,6 +1,10 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
+import ChartAnnotation from 'chartjs-plugin-annotation';
+
+
+Chart.register(ChartAnnotation);
 
 const TotalModerators = () => {
   const data = {
@@ -16,6 +20,16 @@ const TotalModerators = () => {
     ],
   };
 
+
+  const getMedian = (arr) => {
+    const mid = Math.floor(arr.length / 2);
+    const nums = [...arr].sort((a, b) => a - b);
+    return arr.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+  };
+
+
+  const median = getMedian(data.datasets[0].data);
+
   const options = {
     plugins: {
       title: {
@@ -23,7 +37,24 @@ const TotalModerators = () => {
         text: 'Total Moderators Activity'
       },
       legend: {
-        display: false 
+        display: false
+      },
+      annotation: {
+        annotations: {
+          line1: {
+            type: 'line',
+            yMin: median,
+            yMax: median,
+            borderColor: 'rgb(255, 99, 132)',
+            borderWidth: 2,
+            borderDash: [10, 5],
+            label: {
+              content: 'Median',
+              enabled: true,
+              position: 'end'
+            }
+          }
+        }
       }
     },
     scales: {
@@ -39,7 +70,7 @@ const TotalModerators = () => {
           text: 'No of Messages'
         },
         beginAtZero: true,
-        ticks:{
+        ticks: {
             stepSize: 25,
         }
       }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
-
+import backgroundImage from './assets/WABg.jpeg'; 
 const WhatsApp = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [optionSelected, setOptionSelected] = useState(null);
@@ -93,51 +93,51 @@ const WhatsApp = () => {
   };
 
   return (
-    <div>
+    <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', minHeight: '100vh' }}>
       <Navbar />
       <Sidebar />
       <div style={{ margin: '20px' }}>
         <h1>WhatsApp Messages</h1>
-        <p>Select a file to upload and then submit it for processing.</p>
-        <input
+        <p>Upload and submit files for processing.</p>
+        <input 
           type="file"
           id="fileInput"
           style={{ display: 'none' }}
           onChange={handleFileChange}
         />
-        <button onClick={handleUploadClick}>Upload</button>
-        <button onClick={handleSubmitFile} disabled={!selectedFile}>Submit File</button>
+        <button style={{ backgroundColor: 'green', color: 'white', marginRight: '10px' }} onClick={handleUploadClick}>Upload</button>
+        <button style={{ backgroundColor: 'grey', color: 'white' }} onClick={handleSubmitFile}>Submit</button>
         {selectedFile && <p>File ready to submit: {selectedFile.name}</p>}
 
-        <div style={{ marginTop: '20px' }}> 
-          <h3>Or</h3> 
+        <div style={{ marginTop: '20px', marginBottom: '20px', textAlign: 'center' }}> 
+          <h3 style={{ marginTop: '20px' }}>Or</h3> 
         </div>
         
         <h2>Manually Make Changes</h2>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
-          <button onClick={() => setOptionSelected('group1')}>Group 1</button>
-          <button onClick={() => setOptionSelected('group2')}>Group 2</button>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '30px' }}>
+          <button style={{ backgroundColor: 'green', color: 'white' }} onClick={() => setOptionSelected('group1')}>Group 1</button>
+          <button style={{ backgroundColor: 'green', color: 'white' }} onClick={() => setOptionSelected('group2')}>Group 2</button>
         </div>
-
+        
         {optionSelected && (
           <>
             <div onChange={handleOptionChange} style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <label style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', whiteSpace: 'nowrap' }}>
+              <label style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', whiteSpace: 'nowrap' }}>
                 <input type="radio" id="ChangeMobileNumber" value="ChangeMobileNumber" name="option" />
                 <span style={{ marginLeft: '10px' }}>Change Mobile Number</span>
-            </label>
-            <label style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', whiteSpace: 'nowrap' }}>
+              </label>
+              <label style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', whiteSpace: 'nowrap' }}>
                 <input type="radio" id="AddAltMobileNumber" value="AddAltMobileNumber" name="option" />
                 <span style={{ marginLeft: '10px' }}>Add Alternative Mobile Number</span>
-            </label>
-            <label style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', whiteSpace: 'nowrap' }}>
+              </label>
+              <label style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', whiteSpace: 'nowrap' }}>
                 <input type="radio" id="AddMember" value="AddMember" name="option" />
                 <span style={{ marginLeft: '10px' }}>Add Member to Group</span>
-            </label>
-            <label style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', whiteSpace: 'nowrap' }}>
+              </label>
+              <label style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', whiteSpace: 'nowrap' }}>
                 <input type="radio" id="RemoveMember" value="RemoveMember" name="option" />
                 <span style={{ marginLeft: '10px' }}>Remove Member from a Group</span>
-            </label>
+              </label>
             </div>
 
             {optionSelected && (
@@ -148,7 +148,7 @@ const WhatsApp = () => {
                   placeholder="User id"
                   value={userData.userId}
                   onChange={handleInputChange}
-                  style={{ width: '200px' }} // Adjusted width
+                  style={{ width: '200px' }} 
                 />
                 <input 
                   type="text"
@@ -156,7 +156,7 @@ const WhatsApp = () => {
                   placeholder="User's name"
                   value={userData.userName}
                   onChange={handleInputChange}
-                  style={{ width: '200px' }} // Adjusted width
+                  style={{ width: '200px' }} 
                 />
                 {optionSelected !== 'AddAltMobileNumber' && (
                   <input 
@@ -165,7 +165,7 @@ const WhatsApp = () => {
                     placeholder="User's Mobile Number"
                     value={userData.mobileNumber}
                     onChange={handleInputChange}
-                    style={{ width: '200px' }} // Adjusted width
+                    style={{ width: '200px' }} 
                   />
                 )}
                 {optionSelected === 'AddAltMobileNumber' && (
@@ -175,10 +175,10 @@ const WhatsApp = () => {
                     placeholder="User's Alternative Mobile Number"
                     value={userData.altMobileNumber}
                     onChange={handleInputChange}
-                    style={{ width: '200px' }} // Adjusted width
+                    style={{ width: '200px' }} 
                   />
                 )}
-                <button onClick={handleSubmitChanges}>Make Changes</button>
+                <button style={{ backgroundColor: 'green', color: 'white' }} onClick={handleSubmitChanges}>Make Changes</button>
               </div>
             )}
           </>

@@ -1,7 +1,10 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
+import 'chartjs-plugin-annotation';
+import ChartAnnotation from 'chartjs-plugin-annotation';
 
+Chart.register(ChartAnnotation);
 
 const LineChart = () => {
   const data = {
@@ -31,6 +34,19 @@ const LineChart = () => {
     ],
   };
 
+  
+  const getMedian = (arr) => {
+    const mid = Math.floor(arr.length / 2);
+    const nums = [...arr].sort((a, b) => a - b);
+    return arr.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+  };
+
+ 
+  const allData = data.datasets.flatMap(dataset => dataset.data);
+
+ 
+  const median = getMedian(allData);
+
   const options = {
     plugins: {
       title: {
@@ -40,6 +56,23 @@ const LineChart = () => {
       legend: {
         display: true,
         position: 'top'
+      },
+      annotation: {
+        annotations: {
+          line1: {
+            type: 'line',
+            yMin: median,
+            yMax: median,
+            borderColor: 'rgb(255, 99, 132)',
+            borderWidth: 2,
+            borderDash: [10, 5],
+            label: {
+              content: 'Median',
+              enabled: true,
+              position: 'end'
+            }
+          }
+        }
       }
     },
     scales: {
@@ -67,10 +100,11 @@ const LineChart = () => {
       alignItems: 'center',
       height: '70vh' 
     }}>
-      <div style={{ width: '900px', height: '400px' }}> {/* This will hold the chart */}
+      <div style={{ width: '900px', height: '400px' }}>
         <Line data={data} options={options} />
       </div>
     </div>
   );
 };
+
 export default LineChart;
