@@ -14,7 +14,7 @@ const users = {
   'admin@example.com': { password: 'admin123', role: 'systemAdmin' }
 };
 
-const jwtSecret = 'your_secret_key';  // You should store this securely.
+const jwtSecret = '1112';  // You should store this securely.
 
 app.post('/login', (req, res) => {
   const { email, password } = req.body;

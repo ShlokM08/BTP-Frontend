@@ -33,7 +33,7 @@ function CSidebar() {
   return (
     <div className="sidebar">
       <div className="sidebar-wrapper">
-      <div className="logo d-flex align-items-center justify-content-between">
+        <div className="logo d-flex align-items-center justify-content-between">
           <h5 className="brand-name">Kushal Ma</h5>
         </div>
         <hr/>
@@ -44,32 +44,32 @@ function CSidebar() {
         <hr />
         <ul className="nav flex-column">
           {routes.map((route, index) => (
-            <React.Fragment key={index}>
-              <li className={`nav-item ${openDropdownIndex === index ? 'open' : ''}`}>
-                <NavLink to={route.path} className="nav-link" activeClassName="active">
-                  <FontAwesomeIcon icon={route.icon} className="nav-icon" />
-                  <span className="link-text">{route.name}</span>
-                </NavLink>
-                {route.dropdown && (
+            <li key={index} className={`nav-item ${openDropdownIndex === index && route.dropdown ? 'open' : ''}`}>
+              <NavLink to={route.path} className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+                <FontAwesomeIcon icon={route.icon} className="nav-icon" />
+                <span className="link-text">{route.name}</span>
+              </NavLink>
+              {route.dropdown && (
+                <>
                   <FontAwesomeIcon 
                     icon={openDropdownIndex === index ? faChevronUp : faChevronDown} 
                     onClick={() => handleDropdown(index)} 
                     className="icon-small dropdown-toggle" 
                   />
-                )}
-                {route.dropdown && openDropdownIndex === index && (
-                  <ul className="dropdown">
-                    {route.subRoutes.map((subRoute, subIndex) => (
-                      <li key={subIndex}>
-                        <NavLink to={`${route.path}/${subRoute.toLowerCase()}`} className="nav-link dropdown-link">
-                          {subRoute}
-                        </NavLink>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            </React.Fragment>
+                  {openDropdownIndex === index && (
+                    <ul className="dropdown">
+                      {route.subRoutes.map((subRoute, subIndex) => (
+                        <li key={subIndex}>
+                          <NavLink to={`${route.path}/${subRoute.toLowerCase()}`} className={({ isActive }) => isActive ? "nav-link dropdown-link active" : "nav-link dropdown-link"}>
+                            {subRoute}
+                          </NavLink>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </>
+              )}
+            </li>
           ))}
         </ul>
       </div>

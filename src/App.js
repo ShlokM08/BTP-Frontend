@@ -10,6 +10,7 @@ import GRP from './GRP';
 import ControllerHomePage from './ControllerHomePage';
 import SAHomePage from './SAHomePage';
 import backgroundImage from './assets/WABg.jpeg'; 
+import CalendarComponent from './calendar'; // Adjust the path as necessary
 
 function App() {
   const [activeTab, setActiveTab] = useState('login');  // Ensure login is the default active tab
@@ -59,22 +60,23 @@ function App() {
     );
   };
 
-  return (
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<><Layout /><Login /></>} />
-          <Route path="/signup" element={<><Layout /><SignUp /></>} />
-          <Route path="/HomePage" element={<HomePage />} />
-          <Route path="*" element={<><Layout /><Login /></>} />
-          <Route path="/ControllerHomePage" element={<ControllerHomePage />} />
-          <Route path="/SAHomePage" element={<SAHomePage />} />
-          <Route path="/chats/whatsapp" element={<WhatsApp />} />
-          <Route path="/groups/group-1" element={<GRP />} />
-        </Routes>
-      </div>
-    </Router>
-  );
-}
-
-export default App;
+    return (
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/HomePage" element={<HomePage />} />
+            <Route path="/calendar" element={<CalendarComponent />} />
+            <Route path="/ControllerHomePage" element={<ControllerHomePage />} />
+            <Route path="/SAHomePage" element={<SAHomePage />} />
+            <Route path="/chats/whatsapp" element={<WhatsApp />} />
+            <Route path="/groups/group-1" element={<GRP />} />
+            <Route path="*" element={<Login />} />
+          </Routes>
+        </div>
+      </Router>
+    );
+  }
+  
+  export default App;
