@@ -1,3 +1,4 @@
+require('dotenv').config({ path: './secure.env' });
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
