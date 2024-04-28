@@ -60,9 +60,6 @@ const Login = () => {
           <button type="button" className="social-button google">
             <img src={googleIcon} alt="Google" className="logo" />Continue with Google
           </button>
-          <button type="button" className="social-button facebook">
-            <img src={facebookIcon} alt="Facebook" className="logo" />Sign in with Facebook
-          </button>
           </div>
       </form>
     </div>

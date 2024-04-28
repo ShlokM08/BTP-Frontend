@@ -7,9 +7,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import './Sidebar.css';
 
+import profilePicture from './assets/pp.jpg'; // Adjust the path as necessary
+
 const user = {
   name: "Tania Andrew",
-  profilePicture: "./src/assets/pp.png",
+  profilePicture: profilePicture,
 };
 
 const routes = [
