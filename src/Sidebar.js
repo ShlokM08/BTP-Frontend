@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTachometerAlt, faCube, faTable, faChartBar, faCalendar,
-  faChevronDown, faChevronUp
+  faChevronDown, faChevronUp, faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
 import './Sidebar.css';
 
@@ -11,10 +11,10 @@ import WhatsApp from './Whatsapp';
 import GRP from './GRP';
 import Dashboard from './Dashboard';
 
-import profilePicture from './assets/pp.jpg'; // Adjust the path as necessary
+import profilePicture from './assets/pp.jpg';
 
 const user = {
-  name: "Tania Andrew",
+  name: "Divya Prabha",
   profilePicture: profilePicture,
 };
 
@@ -22,14 +22,14 @@ const routes = [
   { path: "/homepage", name: "Dashboard", icon: faTachometerAlt, component: Dashboard },
   {
     name: "Chats", icon: faCube, dropdown: true, subRoutes: [
-      { name: 'Zoom', path: '/chats/zoom' }, // Ensure you have a path and component if needed
+      { name: 'Zoom', path: '/chats/zoom' },
       { name: 'WhatsApp', path: '/chats/whatsapp', component: WhatsApp }
     ]
   },
   {
     name: "Groups", icon: faTable, dropdown: true, subRoutes: [
       { name: 'Group 1', path: '/groups/group-1', component: GRP },
-      { name: 'Group 2', path: '/groups/group-2' } // Ensure you add path even if it's just a placeholder
+      { name: 'Group 2', path: '/groups/group-2' }
     ]
   },
   {
@@ -44,15 +44,20 @@ const routes = [
 function Sidebar() {
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
   const location = useLocation();
+  const navigate = useNavigate(); // hook for redirecting
 
   const handleDropdown = (index) => {
-    // Toggle dropdown index or set new index
     setOpenDropdownIndex(openDropdownIndex === index ? null : index);
   };
 
-  // Function to determine if the route is active
   const isActiveRoute = (routePath) => {
     return location.pathname === routePath;
+  };
+
+  const logout = () => {
+    // Implement logout logic here, e.g., clearing tokens
+    localStorage.removeItem('jwtToken'); // Example: clear token
+    navigate('/login'); // Redirect to login page
   };
 
   return (
@@ -95,6 +100,12 @@ function Sidebar() {
               )}
             </li>
           ))}
+          <li className="nav-item">
+            <div className="nav-link" onClick={logout}>
+              <FontAwesomeIcon icon={faSignOutAlt} className="nav-icon" />
+              <span className="link-text">Logout</span>
+            </div>
+          </li>
         </ul>
       </div>
     </div>

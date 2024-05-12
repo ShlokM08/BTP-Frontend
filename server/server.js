@@ -9,9 +9,9 @@ app.use(cors());
 app.use(express.json());
 
 const users = {
-  'moderator@example.com': { password: 'mod123', role: 'moderator' },
-  'controller@example.com': { password: 'con123', role: 'controller' },
-  'admin@example.com': { password: 'admin123', role: 'systemAdmin' }
+  'divyaprabha@kushalma.sys.in': { password: 'mod123', role: 'moderator' },
+  'angeladsouza@kushalma.sys.in': { password: 'con123', role: 'controller' },
+  'anjalisharma@kushalma.sys.in': { password: 'admin123', role: 'systemAdmin' }
 };
 
 const jwtSecret = '1112';  // You should store this securely.

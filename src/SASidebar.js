@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faTachometerAlt, faCube, faTable, faMapMarkerAlt, faChartBar, faCalendar, 
-  faFile, faChevronDown, faChevronUp
+import {
+  faTachometerAlt, faCube, faTable, faChartBar, faCalendar,
+  faChevronDown, faChevronUp, faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
 import './Sidebar.css';
 
 import profilePicture from './assets/pp.jpg'; // Adjust the path as necessary
 
 const user = {
-  name: "Tania Andrew",
+  name: "Anjali Sharma",
   profilePicture: profilePicture,
 };
 
@@ -26,9 +26,16 @@ const routes = [
 
 function CSidebar() {
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
+  const navigate = useNavigate(); // useNavigate for redirection
 
   const handleDropdown = (index) => {
     setOpenDropdownIndex(openDropdownIndex === index ? null : index);
+  };
+
+  const logout = () => {
+    // Placeholder for your logout logic, e.g., clear token
+    localStorage.removeItem('jwtToken'); // Example: clear JWT token
+    navigate('/login'); // Redirect to login page
   };
 
   return (
@@ -47,20 +54,13 @@ function CSidebar() {
           {routes.map((route, index) => (
             <React.Fragment key={index}>
               <li className={`nav-item ${openDropdownIndex === index && route.dropdown ? 'open' : ''}`}>
-                <NavLink 
-                  to={route.path} 
-                  className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
-                >
-                  <FontAwesomeIcon icon={route.icon} className="nav-icon" />
-                  <span className="link-text">{route.name}</span>
-                </NavLink>
-                {route.dropdown && (
+                {route.dropdown ? (
                   <>
-                    <FontAwesomeIcon 
-                      icon={openDropdownIndex === index ? faChevronUp : faChevronDown} 
-                      onClick={() => handleDropdown(index)} 
-                      className="icon-small dropdown-toggle" 
-                    />
+                    <div className="nav-link" onClick={() => handleDropdown(index)}>
+                      <FontAwesomeIcon icon={route.icon} className="nav-icon" />
+                      <span className="link-text">{route.name}</span>
+                      <FontAwesomeIcon icon={openDropdownIndex === index ? faChevronUp : faChevronDown} className="icon-small dropdown-toggle" />
+                    </div>
                     {openDropdownIndex === index && (
                       <ul className="dropdown">
                         {route.subRoutes.map((subRoute, subIndex) => (
@@ -76,10 +76,21 @@ function CSidebar() {
                       </ul>
                     )}
                   </>
+                ) : (
+                  <NavLink to={route.path} className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+                    <FontAwesomeIcon icon={route.icon} className="nav-icon" />
+                    <span className="link-text">{route.name}</span>
+                  </NavLink>
                 )}
               </li>
             </React.Fragment>
           ))}
+          <li className="nav-item">
+            <div className="nav-link" onClick={logout}>
+              <FontAwesomeIcon icon={faSignOutAlt} className="nav-icon" />
+              <span className="link-text">Logout</span>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
