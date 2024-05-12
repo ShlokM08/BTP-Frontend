@@ -96,7 +96,7 @@ const WhatsApp = () => {
     <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', minHeight: '100vh' }}>
       <Navbar />
       <Sidebar />
-      <div style={{ margin: '20px' }}>
+      <div style={{ margin: '20px',marginLeft:'280px' }}>
         <h1>WhatsApp Messages</h1>
         <p>Upload and submit files for processing.</p>
         <input 
